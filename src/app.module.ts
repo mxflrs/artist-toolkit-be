@@ -1,5 +1,10 @@
 import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
+import { CreateSpaceHandler } from 'src/application/spaces/handlers/create-space.handler';
+import { DeleteSpaceHandler } from 'src/application/spaces/handlers/delete-space.handler';
+import { GetAllSpacesHandler } from 'src/application/spaces/handlers/get-all-spaces.handler';
+import { GetSpaceByIdHandler } from 'src/application/spaces/handlers/get-space-by-id.handler';
+import { UpdateSpaceHandler } from 'src/application/spaces/handlers/update-space.handler';
 import { CreateSubtopicHandler } from 'src/application/subtopics/handlers/create-subtopic.handler';
 import { DeleteSubtopicHandler } from 'src/application/subtopics/handlers/delete-subtopic.handler';
 import { GetAllSubtopicsHandler } from 'src/application/subtopics/handlers/get-all-subtopics.handler';
@@ -15,21 +20,24 @@ import { DeleteUserHandler } from 'src/application/user/handlers/delete-user.han
 import { GetUserHandler } from 'src/application/user/handlers/get-query.handler';
 import { ListUsersHandler } from 'src/application/user/handlers/list-users.handler';
 import { UpdateUserHandler } from 'src/application/user/handlers/update-user.handler';
+import { SpaceRepository } from 'src/infrastructure/repositories/space.repository';
 import { SubtopicRepository } from 'src/infrastructure/repositories/substopic.repository';
 import { TopicRepository } from 'src/infrastructure/repositories/topic.repository';
 import { UserRepository } from 'src/infrastructure/repositories/user.repository';
+import { SpaceController } from 'src/presentation/controllers/space.controller';
 import { SubtopicController } from 'src/presentation/controllers/substopic.controller';
 import { TopicController } from 'src/presentation/controllers/topic.controller';
 import { UserController } from 'src/presentation/controllers/user.controller';
 
 @Module({
   imports: [CqrsModule],
-  controllers: [UserController, TopicController, SubtopicController],
+  controllers: [UserController, TopicController, SubtopicController, SpaceController],
   providers: [
     // REPOSITORIES
     UserRepository,
     TopicRepository,
     SubtopicRepository,
+    SpaceRepository,
 
     // HANDLERS
     GetUserHandler,
@@ -49,6 +57,12 @@ import { UserController } from 'src/presentation/controllers/user.controller';
     UpdateSubtopicHandler,
     GetSubtopicByIdHandler,
     DeleteSubtopicHandler,
+
+    CreateSpaceHandler,
+    GetAllSpacesHandler,
+    UpdateSpaceHandler,
+    GetSpaceByIdHandler,
+    DeleteSpaceHandler,
   ],
 })
 export class AppModule {}
