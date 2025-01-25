@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ISpace } from 'src/domain/interfaces/space.interface';
+import { IMaterial } from 'src/domain/interfaces/material.interface';
 import { supabase } from 'src/infrastructure/database/supabase-client';
-import { SpaceDto } from 'src/presentation/dtos/space.dto';
+import { MaterialDto } from 'src/presentation/dtos/material.dto';
 
 @Injectable()
-export class SpaceRepository {
-  async save(subtopic: SpaceDto): Promise<ISpace | null> {
+export class MaterialRepository {
+  async save(subtopic: MaterialDto): Promise<IMaterial | null> {
     const { data, error } = await supabase
-      .from('spaces')
+      .from('materials')
       .insert(subtopic)
       .select();
 
@@ -15,16 +15,16 @@ export class SpaceRepository {
     return data[0] || null;
   }
 
-  async getAll(): Promise<ISpace[] | null> {
-    const { data, error } = await supabase.from('spaces').select('*');
+  async getAll(): Promise<IMaterial[] | null> {
+    const { data, error } = await supabase.from('materials').select('*');
 
     if (error) throw new Error(`Failed to fetch suptopics`);
     return data || null;
   }
 
-  async getById(subtopicId: number): Promise<ISpace | null> {
+  async getById(subtopicId: number): Promise<IMaterial | null> {
     const { data, error } = await supabase
-      .from('spaces')
+      .from('materials')
       .select('*')
       .eq('id', subtopicId)
       .single();
@@ -33,9 +33,9 @@ export class SpaceRepository {
     return data || null;
   }
 
-  async update(subtopic: SpaceDto): Promise<ISpace | null> {
+  async update(subtopic: MaterialDto): Promise<IMaterial | null> {
     const { data, error } = await supabase
-      .from('spaces')
+      .from('materials')
       .update({
         ...subtopic,
         updated_at: new Date().toISOString(),
@@ -50,7 +50,7 @@ export class SpaceRepository {
 
   async delete(subtopicId: number) {
     const { error } = await supabase
-      .from('spaces')
+      .from('materials')
       .delete()
       .eq('id', subtopicId);
     if (error) throw new Error(`Failed save user ${error}`);

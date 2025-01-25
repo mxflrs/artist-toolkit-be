@@ -1,0 +1,3 @@
+export class GetAllMaterialsQuery {
+  constructor() {}
+}
